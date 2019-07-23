@@ -8,6 +8,7 @@ A docker image for caching git clone/pull based on [jonasmalacofilho/git-cache-h
 
 If you have [NobodyXu/apt-cache][2] installed, just run `make` to build it.
 
+If not, run `env NO_APT_PROXY=true make`.
 
 ## How to run
 
