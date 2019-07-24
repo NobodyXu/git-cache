@@ -32,6 +32,10 @@ git config --global url."http://$HOST_IP:$PORT_NUMBER/".insteadOf https://
 
 in the container or on other machines.
 
+
+If you have any problem using this repository or have advices on how to improve, please open a github issue and I will answer you as soon 
+as possible.
+
 # Reference:
 
  1. [jonasmalacofilho/git-cache-http-server][1]
