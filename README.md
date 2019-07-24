@@ -4,6 +4,10 @@ A docker image for caching git clone/pull based on [jonasmalacofilho/git-cache-h
 
 # Usage
 
+## Pull from docker hub
+
+Simply run `docker pull nobodyxu/git-cache`.
+
 ## How to build
 
 Just run `make` to build it.
