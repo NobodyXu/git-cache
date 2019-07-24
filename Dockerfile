@@ -21,6 +21,11 @@ RUN npm install -g git-cache-http-server
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # Clean npm cache
 RUN npm cache clean --force
+# Clean apt-proxy
+COPY remove-apt-proxy.sh /root/
+RUN /root/remove-apt-proxy.sh
+# Clean scripts
+RUN rm /root/*.sh
 
 # Workaround the problem that multi-stage build cannot copy files between stages when 
 # usernamespace is enabled.
