@@ -24,6 +24,7 @@ RUN npm cache clean --force
 
 # Remove useless package
 RUN apt-get remove -y apt-utils npm
+RUN apt-get autoremove -y
 
 # Clean apt-proxy
 COPY remove-apt-proxy.sh /root/
