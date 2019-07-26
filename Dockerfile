@@ -32,6 +32,11 @@ RUN /root/remove-apt-proxy.sh
 # Clean scripts
 RUN rm /root/*.sh
 
+# Config git to tradeoff cache size over decompression time
+RUN git config --global core.compression 9
+RUN git config --global core.looseCompression 9
+RUN git config --global pack.compression 9
+
 # Workaround the problem that multi-stage build cannot copy files between stages when 
 # usernamespace is enabled.
 RUN chown -R root:root $(ls / | grep -v -e "dev" -e "sys" -e "tmp" -e "proc") || echo
