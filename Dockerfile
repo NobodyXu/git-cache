@@ -17,6 +17,12 @@ RUN apt-get install -y --no-install-recommends nodejs npm git apt-utils
 # Install git-cache-http-server
 RUN npm install -g git-cache-http-server
 
+# Setup automatic task to run at 01:30
+# Install coreutils for command sleep
+RUN apt-get install -y --no-install-recommends coreutils
+COPY git-gc.sh /root/
+COPY start.sh /root/
+
 # Clean apt-get cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # Clean npm cache
@@ -30,7 +36,7 @@ RUN apt-get autoremove -y
 COPY remove-apt-proxy.sh /root/
 RUN /root/remove-apt-proxy.sh
 # Clean scripts
-RUN rm /root/*.sh
+RUN rm /root/detect-apt-proxy.sh /root/remove-apt-proxy.sh
 
 # Config git to tradeoff cache size over decompression time
 RUN git config --global core.compression 9
@@ -44,4 +50,4 @@ RUN chown -R root:root $(ls / | grep -v -e "dev" -e "sys" -e "tmp" -e "proc") ||
 FROM debian:buster
 COPY --from=base / /
 EXPOSE 8080
-CMD ["/usr/bin/env", "git-cache-http-server"]
+CMD ["/root/start.sh"]
