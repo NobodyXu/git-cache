@@ -17,7 +17,7 @@ RUN apt-get install -y --no-install-recommends nodejs npm git apt-utils
 # Install git-cache-http-server
 RUN npm install -g git-cache-http-server
 
-# Setup automatic task to run at 01:30
+# Copy git-gc.sh, which automatically runs 'git gc --aggressive' in every git mirror at 1:30.
 # Install coreutils for command sleep
 RUN apt-get install -y --no-install-recommends coreutils
 COPY git-gc.sh /root/
