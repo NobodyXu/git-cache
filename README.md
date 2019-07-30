@@ -6,7 +6,11 @@
 A docker image for caching git clone/pull based on [jonasmalacofilho/git-cache-http-server][1], with
 
  1. git compression level turned to 9.
- 2. `git gc --aggressive` run on every cached repository every night at 1:30.
+ 2. `git gc --aggressive` run on every cached repository every night at 1:30 (can be overriden by environment variables `HOUR` and `MIN`).
+
+NOTE:
+
+The time inside container maybe is different from your host due to different timezone.
 
 # Usage
 

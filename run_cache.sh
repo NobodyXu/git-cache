@@ -20,6 +20,8 @@ docker run -d \
 	   -p "$3":"$3" \
 	   --mount "type=volume,src=$5,dst=$4" \
 	   --name "$1" \
+	   $([ -n "$HOUR" ] && echo "-e HOUR=$HOUR") \
+	   $([ -n "$MIN" ] && echo "-e MIN=$MIN") \
 	   "$2"
 
 # Wait for the container to be up
