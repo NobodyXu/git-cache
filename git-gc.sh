@@ -18,9 +18,9 @@ sleep_until() {
     target_min="$2"
 
     let diff_hour=target_hour-$(date +%H)
-    [ $diff_hour -lt 0 ] && let diff_hour=diff_hour+24
     let diff_min=target_min-$(date +%M)
     [ $diff_min -lt 0 ] && let diff_min=diff_min+60 && let diff_hour=diff_hour-1
+    [ $diff_hour -lt 0 ] && let diff_hour=diff_hour+24
 
     sleep "${diff_hour}h" "${diff_min}m"
 }
