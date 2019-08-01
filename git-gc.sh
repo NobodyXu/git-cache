@@ -25,11 +25,12 @@ sleep_until() {
     sleep "${diff_hour}h" "${diff_min}m"
 }
 
+hour=1
+[ -n "$HOUR" ] && hour=$HOUR
+min=30
+[ -n "$MIN" ] && min=$MIN
+
 while true; do
-    hour=1
-    [ -n "$HOUR" ] && hour=$HOUR
-    min=30
-    [ -n "$MIN" ] && min=$MIN
     sleep_until $hour $min
     for_each_git_dir "git gc --aggressive" "/var/cache/git"
 done
