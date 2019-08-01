@@ -17,8 +17,14 @@ sleep_until() {
     target_hour="$1"
     target_min="$2"
 
-    let diff_hour=target_hour-$(date +%H)
-    let diff_min=target_min-$(date +%M)
+    # In case of race condition:
+    #  1. After fetching hour when fetching min, hour and min changed. E.x., 16:59->17:00, the process will get 16:00.
+    #  2. Vice versa.
+    # In the first  situation, the process may be sleep for an additional hour.
+    # In the second situation, the process may be sleep for an additional min.
+    HM=($(date +'%H %M'))
+    let diff_hour=target_hour-${HM[0]}
+    let diff_min=target_min-${HM[1]}
     [ $diff_min -lt 0 ] && let diff_min=diff_min+60 && let diff_hour=diff_hour-1
     [ $diff_hour -lt 0 ] && let diff_hour=diff_hour+24
 
