@@ -12,16 +12,10 @@ RUN /tmp/detect-apt-proxy.sh ${APT_PROXY_PORT}
 
 # Install dependencies
 RUN apt-get update && apt-get dist-upgrade -y
-RUN apt-get install -y --no-install-recommends nodejs npm git apt-utils
+RUN apt-get install -y --no-install-recommends nodejs npm git apt-utils coreutils python3
 
 # Install git-cache-http-server
 RUN npm install -g git-cache-http-server
-
-# Copy git-gc.sh, which automatically runs 'git gc --aggressive' in every git mirror at 1:30.
-# Install coreutils for command sleep
-RUN apt-get install -y --no-install-recommends coreutils
-COPY git-gc.sh /root/
-COPY start.sh /root/
 
 # Clean apt-proxy
 COPY remove-apt-proxy.sh /tmp/
@@ -41,6 +35,8 @@ RUN git config --global core.compression 9
 RUN git config --global core.looseCompression 9
 RUN git config --global pack.compression 9
 
+COPY main.py /root/
+
 # Workaround the problem that multi-stage build cannot copy files between stages when 
 # usernamespace is enabled.
 RUN chown -R root:root $(ls / | grep -v -e "dev" -e "sys" -e "tmp" -e "proc") || echo
@@ -48,4 +44,4 @@ RUN chown -R root:root $(ls / | grep -v -e "dev" -e "sys" -e "tmp" -e "proc") ||
 FROM debian:buster
 COPY --from=base / /
 EXPOSE 8080
-CMD ["/root/start.sh"]
+CMD ["/root/main.py"]
