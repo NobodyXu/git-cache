@@ -60,24 +60,18 @@ daemon_monitor.start()
 
 target_hour  = int(os.environ.get("HOUR", 1))
 target_min   = int(os.environ.get("MIN",  30))
-wait_timeout = int(os.environ.get("WAIT_TIMEOUT", 14400)) # 4 hours
+# 14400 seconds = 4 hours
+wait_timeout = int(os.environ.get("WAIT_TIMEOUT", 14400)) * 1000000000 # In nano second. 1 sec = 1000000000 ns
 
 gc_progress = for_each_git_dir(["/usr/bin/env", "git", "gc", "--aggressive"], "/var/cache/git")
 
-is_timeout = False
-def sigalarm_handler(sig_num, stack_frame):
-    is_timeout = True
-
 while True:
-    signal.signal(signal.SIGALRM, signal.SIG_IGN)
     sleep_until(target_hour, target_min)
 
-    is_timeout = False
-    signal.signal(signal.SIGALRM, sigalarm_handler)
-    signal.alarm(wait_timeout)
+    start_time = time.time_ns()
 
     for is_finished in gc_progress:
-        if is_finished or is_timeout:
+        if is_finished or time.time_ns() - start_time >= wait_timeout:
             # sleep for 1 min in case of the git gc command finish within one min.
             # In this case, sleep_until with return immediately and the whole gc_progress will be started again
             time.sleep(60)
