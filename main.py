@@ -67,4 +67,7 @@ while True:
 
     for is_finished in gc_progress:
         if is_finished:
+            # sleep for 1 min in case of the git gc command finish within one min.
+            # In this case, sleep_until with return immediately and the whole gc_progress will be started again
+            time.sleep(60)
             break
