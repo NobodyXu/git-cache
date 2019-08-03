@@ -77,7 +77,7 @@ while True:
     signal.alarm(wait_timeout)
 
     for is_finished in gc_progress:
-        if is_finished or is_timout:
+        if is_finished or is_timeout:
             # sleep for 1 min in case of the git gc command finish within one min.
             # In this case, sleep_until with return immediately and the whole gc_progress will be started again
             time.sleep(60)
