@@ -7,7 +7,7 @@ A docker image for caching git clone/pull based on [jonasmalacofilho/git-cache-h
 
  1. git compression level turned to 9.
  2. `git gc --aggressive` run on every cached repository every night at 1:30 (can be overriden by environment variables `HOUR` and `MIN`, in 24 hour format).
- 3. After `WAIT_TIMEOUT` (default to 4 hours), no new `git gc --aggressive` process will be spawned. In the next day, gc process will start from where it was left.
+ 3. After `WAIT_TIMEOUT` (default to 4 hours, can be overloaded by environment variables), no new `git gc --aggressive` process will be spawned. In the next day, gc process will start from where it was left.
 
 *NOTE*:
 
