@@ -5,6 +5,7 @@ import subprocess
 import time
 import os
 import pathlib
+import signal
 
 def diff_in_sec(target_hour, target_min):
     curr_time = time.gmtime() # Get UTC time
@@ -57,16 +58,20 @@ def run_daemon():
 daemon_monitor = threading.Thread(target = run_daemon, name = "daemon_monitor")
 daemon_monitor.start()
 
-target_hour = int(os.environ.get("HOUR", 1))
-target_min  = int(os.environ.get("MIN",  30))
+target_hour  = int(os.environ.get("HOUR", 1))
+target_min   = int(os.environ.get("MIN",  30))
+# 14400 seconds = 4 hours
+wait_timeout = int(os.environ.get("WAIT_TIMEOUT", 14400)) * 1000000000 # In nano second. 1 sec = 1000000000 ns
 
 gc_progress = for_each_git_dir(["/usr/bin/env", "git", "gc", "--aggressive"], "/var/cache/git")
 
 while True:
     sleep_until(target_hour, target_min)
 
+    start_time = time.time_ns()
+
     for is_finished in gc_progress:
-        if is_finished:
+        if is_finished or time.time_ns() - start_time >= wait_timeout:
             # sleep for 1 min in case of the git gc command finish within one min.
             # In this case, sleep_until with return immediately and the whole gc_progress will be started again
             time.sleep(60)
