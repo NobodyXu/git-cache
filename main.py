@@ -65,6 +65,9 @@ wait_timeout = int(os.environ.get("WAIT_TIMEOUT", 14400)) * 1000000000 # In nano
 
 gc_progress = for_each_git_dir(["/usr/bin/env", "git", "gc", "--aggressive"], "/var/cache/git")
 
+# Limit CPU usage
+os.nice(19)
+
 while True:
     sleep_until(target_hour, target_min)
 
