@@ -38,9 +38,9 @@ def for_each_git_dir(command, prefix):
             print("[ git gc --aggressive ]: Running in mirror:", repo_path)
 
             p = subprocess.Popen(command, stdin = subprocess.DEVNULL, close_fds = True, cwd = repo_path, restore_signals = True)
-            yield False
 
             print("[ git gc --aggressive ]: Exit status of `git gc` in mirror", repo_path, ":", p.wait())
+            yield False
         yield True
 
 def run_daemon():
