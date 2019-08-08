@@ -65,6 +65,17 @@ wait_timeout = int(os.environ.get("WAIT_TIMEOUT", 14400)) * 1000000000 # In nano
 
 gc_progress = for_each_git_dir(["/usr/bin/env", "git", "gc", "--aggressive"], "/var/cache/git")
 
+# Limit CPU usage
+os.nice(19)
+# Use batch scheduler.
+# This means that this process and all its child can be preempted by other schduler scheme.
+# This also mean that they will have bigger timeslice to prevent frequent context switching.
+# 
+# Reference:
+#    https://lwn.net/Articles/3866/
+#    https://www.mankier.com/7/sched
+os.sched_setscheduler(0, os.SCHED_BATCH, os.sched_param(0))
+
 while True:
     sleep_until(target_hour, target_min)
 
