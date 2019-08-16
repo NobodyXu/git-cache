@@ -3,6 +3,8 @@
 ![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/nobodyxu/git-cache.svg)<Paste>
 ![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/nobodyxu/git-cache.svg)
 
+![MicroBadger Size (tag)](https://img.shields.io/microbadger/image-size/nobodyxu/git-cache/latest)
+
 A docker image for caching git clone/pull based on [jonasmalacofilho/git-cache-http-server][1], with
 
  1. git compression level turned to 9.
