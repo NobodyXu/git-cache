@@ -1,6 +1,6 @@
 # git-cache
 
-![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/nobodyxu/git-cache.svg)<Paste>
+![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/nobodyxu/git-cache.svg)
 ![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/nobodyxu/git-cache.svg)
 
 ![MicroBadger Size (tag)](https://img.shields.io/microbadger/image-size/nobodyxu/git-cache/latest)
