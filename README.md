@@ -28,7 +28,7 @@ Simply run `docker pull nobodyxu/git-cache`.
 
 Just run `make` to build it.
 
-Optionally, you can run the docker image from [NobodyXu/apt-cache][2].
+Optionally, you can run the docker image from [NobodyXu/apt-cache][2] to enable apt-cache.
 
 ### *NOTE* 
 
